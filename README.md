@@ -1,4 +1,4 @@
-# Simple Local RAG Tutorial
+# AutoSensAI Chatbot Setup & Tutorial
 
 Local RAG pipeline we're going to build:
 
