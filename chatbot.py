@@ -171,11 +171,8 @@ llm_model = st.session_state.llm_model
 
 # Define your available document sources (you can customize this list)
 document_sources = [
-    "Super_X500_2024_Hypo",
-    "Ford_Mustang_2023_MACH-E",
-    "Chrysler_Pacifica_2017_Limited",
-    "Toyota_Corolla_2020",
-    "Honda_Civic_2022",
+    "Fraggles__X500_2027_FMS",
+    "Fraggles__X700_2026_CRV"
     # Add more sources as needed
 ]
 
