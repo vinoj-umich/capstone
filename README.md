@@ -26,19 +26,20 @@ pip install -r requirements.txt
 
 ### Project Structure
 
-- `/Dataset`: Stores the ingested and preprocessed datasets (e.g., chunked PDFs).
-- `/LLM`: Contains pre-trained large language models used in the project.
-- `/Retrievers`: Embedding models for similarity searches and retrieval tasks.
-- `/Notebook`: Jupyter notebooks for pipeline setup and experimentation.
-- `/Interface`: Streamlit-based chatbot for answering user queries with a local host setup. The chatbot supports conversational features like “chat with PDF.”
+- `/chroma_db_dir`: Stores the ingested and preprocessed datasets (e.g., chunked PDFs).
+<!-- - `/LLM`: Contains pre-trained large language models used in the project. -->
+- `/Manuals` : Raw Data manuals to be processed and converted to chunks and embeddings
+- `/exploration` : Evaluation of different models and comparing with ground truth 
+- `/`: Embedding models for similarity searches and retrieval tasks. Streamlit-based chatbot for answering user queries with a local host setup. 
 
 ### Workflow
 
-1. Preprocess datasets using `DataPreProcess.ipynb` to create train and test datasets from raw knowledge articles.
-2. Experiment with prompt engineering and model evaluation using notebooks under `/LLM`.
-3. Experiment and benchmark retrievers using notebooks under `/Retrievers`.
-4. Execute `GenerateAnswers.ipynb` to create synthetic ground truth answers for training purposes.
-5. Evaluate the complete RAG pipeline with `rag_evaluation.ipynb` using the test dataset.
+1. Preprocess datasets using `document_processor.ipynb` to create train and test datasets from raw pdf manuals.
+2. Experiment with prompt engineering and model evaluation using `rag_evaluation.ipynb`
+3. Experiment and benchmark retrievers using notebooks  `info_retrieval_eval.ipynb`.
+4. document_processor.ipynb contains class to create synthetic ground truth answers for training purposes.
+<!-- 5. Evaluate the complete RAG pipeline with `rag_evaluation.ipynb` using the test dataset. -->
+5. chatbot.py contains streamlit and model usage for chatbot interaction.
 
 ### Features
 
@@ -53,14 +54,14 @@ pip install -r requirements.txt
 
 ### Data Access
 
-The chatbot uses knowledge articles and documents provided by the user. The pipeline supports ingestion of open-source materials such as Wikipedia articles or proprietary datasets for retrieval and query answering.
+The chatbot uses pre-processed pdf manuals and user interacts with chatbot with answers. 
 
 ### Contributors
 
-1. Vinoj Bethellu
-2. Kiran Irde
-3. Shiva Vupputuri
+1. Vinoj Bethelli: Architect and Lead developer.
+2. Kiran Irde: Streamlit coding and documentation.
+3. Siva Vupputuri: Project timelines, exploration and code development.
 
 ### Project Report
 
-Comprehensive documentation and video tutorials are available in the repository and linked to the README file.
+Comprehensive documentation and video tutorials will be available in the repository and linked to the README file.
