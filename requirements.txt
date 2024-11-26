@@ -13,3 +13,6 @@ jupyter
 wheel
 chromadb
 # flash-attn
+rouge_score
+bitsandbytes
+accelerate>=0.26.0
