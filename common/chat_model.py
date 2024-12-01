@@ -84,9 +84,13 @@ class ModelQA:
         
         # Format the prompt with context items
         prompt = self.prompt_formatter(query, context_items)
-
+    
         # Tokenize the prompt
-        input_ids = self.tokenizer(prompt, truncation=True, return_tensors="pt").to("cuda")
+        # Check if the tokenizer has a padding token
+        if self.tokenizer.pad_token is None:
+            # If no padding token is defined, set it to the eos_token
+            self.tokenizer.pad_token = self.tokenizer.eos_token
+        input_ids = self.tokenizer(prompt, return_tensors="pt", truncation=True, padding=True, max_length= 512 , return_attention_mask=True).to("cuda")
 
         # Generate an output of tokens
         outputs = self.llm_model.generate(**input_ids,
