@@ -6,18 +6,9 @@ from sentence_transformers import SentenceTransformer
 
 from common.chroma_db import ChromaDBSearcher
 from common.chat_model import ModelQA
+from common.cache import ModelCache
 
 
-# Cache class to store models
-class ModelCache:
-    def __init__(self):
-        self.cache = {}
-
-    def get(self, model_id):
-        return self.cache.get(model_id)
-
-    def set(self, model_id, model_qa):
-        self.cache[model_id] = model_qa
 
 
 # Initialize the model cache
