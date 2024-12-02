@@ -6,7 +6,7 @@ chromadb==0.5.20
 fitz==1.23.26
 #jupyter
 matplotlib==3.8.3
-numpy==1.26.4
+numpy>=1.23.2,<2.0.0
 pandas==2.2.1
 requests==2.31.0
 rank_bm25
