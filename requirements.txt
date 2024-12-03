@@ -1,22 +1,20 @@
 accelerate==0.26.0
-#bert_score==0.3.12
+# bert_score==0.3.12
 torch
 bitsandbytes==0.44.1
 chromadb==0.5.20
-#flash-attn
-#fitz==1.23.26
+# flash-attn
+# fitz==1.23.26
 fitz==0.0.1.dev2
-#jupyter
-#matplotlib==3.8.3
-numpy>=1.11,<2.1.0
+numpy>=1.17,<2.1.0
 pandas==2.2.1
 requests==2.31.0
-#rank_bm25
-#rouge_score
+# rank_bm25
+# rouge_score
 seaborn==0.12.2
 sentence_transformers==2.5.1
 sentencepiece==0.2.0
 spacy==3.8.2
 tqdm==4.66.2
 transformers==4.38.2
-#wheel==0.41.2
+# wheel==0.41.2
