@@ -22,8 +22,7 @@ class ModelQA:
         """
         Loads the model and tokenizer based on the provided model_id.
         """
-        from transformers import AutoTokenizer, AutoModelForCausalLM, AutoConfig
-        import torch
+        
 
         # Set up quantization if needed
         if self.use_quantization:
@@ -32,13 +31,12 @@ class ModelQA:
             quantization_config = None
         
         # Load the model configuration and tokenizer
-        auth_token = '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'
-        tokenizer = AutoTokenizer.from_pretrained(self.model_id,use_auth_token=auth_token)
+        tokenizer = AutoTokenizer.from_pretrained(self.model_id)
         config = AutoConfig.from_pretrained(self.model_id)
         config.hidden_activation = "gelu"
         
         # Load the actual language model
-        llm_model = AutoModelForCausalLM.from_pretrained(self.model_id, use_auth_token=auth_token, config=config,
+        llm_model = AutoModelForCausalLM.from_pretrained(self.model_id, config=config,
                                                          torch_dtype=torch.float16,
                                                          quantization_config=quantization_config,
                                                          low_cpu_mem_usage=True)
