@@ -32,12 +32,13 @@ class ModelQA:
             quantization_config = None
         
         # Load the model configuration and tokenizer
-        tokenizer = AutoTokenizer.from_pretrained(self.model_id)
+        use_auth_token = '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'
+        tokenizer = AutoTokenizer.from_pretrained(self.model_id,use_auth_token)
         config = AutoConfig.from_pretrained(self.model_id)
         config.hidden_activation = "gelu"
         
         # Load the actual language model
-        llm_model = AutoModelForCausalLM.from_pretrained(self.model_id, config=config,
+        llm_model = AutoModelForCausalLM.from_pretrained(self.model_id, use_auth_token=use_auth_token, config=config,
                                                          torch_dtype=torch.float16,
                                                          quantization_config=quantization_config,
                                                          low_cpu_mem_usage=True)
