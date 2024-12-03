@@ -17,6 +17,6 @@ sentence-transformers==3.3.1
 sentencepiece==0.2.0
 spacy==3.8.2
 tqdm==4.66.2
-transformers==4.38.2
+transformers==4.46.3
 # wheel==0.41.2
 streamlit
