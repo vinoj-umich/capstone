@@ -20,4 +20,6 @@ tqdm==4.66.2
 transformers==4.46.3
 # wheel==0.41.2
 streamlit==1.18.0  # Or the version you need
+altair==4.2.0  # Or any version that works with your setup
+
 

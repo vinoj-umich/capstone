@@ -4,12 +4,15 @@ FROM python:3.11.7
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the requirements.txt file to the container
+# Copy the requirements.txt file into the container
 COPY requirements.txt ./requirements.txt
 
 # Install the required dependencies from the requirements.txt file
-#RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Verify the path and installed packages (optional for debugging)
+RUN echo $PATH
+RUN which streamlit  # Verifies that streamlit is installed and in the path
 
 # Expose the port that Streamlit will use
 EXPOSE 8501
@@ -18,4 +21,4 @@ EXPOSE 8501
 COPY . /app
 
 # Set the command to run the Streamlit app when the container starts
-ENTRYPOINT ["streamlit", "run", "chatbot.py", "--server.port=8501", "--server.address=0.0.0.0"]
+ENTRYPOINT ["streamlit", "run", "chatbot.py"]
