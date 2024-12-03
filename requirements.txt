@@ -19,4 +19,5 @@ spacy==3.8.2
 tqdm==4.66.2
 transformers==4.46.3
 # wheel==0.41.2
-streamlit
+streamlit==1.18.0  # Or the version you need
+
