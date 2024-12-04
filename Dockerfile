@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y \
     libsqlite3-dev \
     && apt-get clean
 
+RUN sqlite3 --version  # To verify the correct version
+
 # Copy the requirements.txt file into the container
 COPY requirements.txt ./requirements.txt
 
