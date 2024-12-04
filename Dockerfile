@@ -4,6 +4,12 @@ FROM python:3.11.7
 # Set the working directory inside the container
 WORKDIR /app
 
+# Install required dependencies, including sqlite3
+RUN apt-get update && apt-get install -y \
+    sqlite3 \
+    libsqlite3-dev \
+    && apt-get clean
+
 # Copy the requirements.txt file into the container
 COPY requirements.txt ./requirements.txt
 
