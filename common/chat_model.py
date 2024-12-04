@@ -23,7 +23,6 @@ class ModelQA:
         Loads the model and tokenizer based on the provided model_id.
         """
         
-
         # Set up quantization if needed
         if self.use_quantization:
             quantization_config = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_compute_dtype=torch.float16)
@@ -36,13 +35,15 @@ class ModelQA:
         config = AutoConfig.from_pretrained(self.model_id, use_auth_token=auth_token)
         config.hidden_activation = "gelu"
         
+        # Force the model to use CPU
+        device = torch.device('cpu')  # Ensure we're using CPU
+        
         # Load the actual language model
         llm_model = AutoModelForCausalLM.from_pretrained(self.model_id, use_auth_token=auth_token, config=config,
                                                          torch_dtype=torch.float16,
                                                          quantization_config=quantization_config,
                                                          low_cpu_mem_usage=True)
-        if not self.use_quantization:
-            llm_model.to("cuda")
+        llm_model.to(device)  # Ensure the model is on CPU
         
         return tokenizer, llm_model
 
@@ -90,7 +91,7 @@ class ModelQA:
         if self.tokenizer.pad_token is None:
             # If no padding token is defined, set it to the eos_token
             self.tokenizer.pad_token = self.tokenizer.eos_token
-        input_ids = self.tokenizer(prompt, return_tensors="pt", truncation=True, padding=True, max_length= 512 , return_attention_mask=True).to("cuda")
+        input_ids = self.tokenizer(prompt, return_tensors="pt", truncation=True, padding=True, max_length=512 , return_attention_mask=True).to("cpu")  # Use CPU
 
         # Generate an output of tokens
         outputs = self.llm_model.generate(**input_ids,
