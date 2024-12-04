@@ -32,8 +32,8 @@ class ModelQA:
         
         # Load the model configuration and tokenizer
         auth_token = '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'
-        tokenizer = AutoTokenizer.from_pretrained(self.model_id,use_auth_token=auth_token)
-        config = AutoConfig.from_pretrained(self.model_id)
+        tokenizer = AutoTokenizer.from_pretrained(self.model_id, use_auth_token=auth_token)
+        config = AutoConfig.from_pretrained(self.model_id, use_auth_token=auth_token)
         config.hidden_activation = "gelu"
         
         # Load the actual language model
