@@ -1,10 +1,14 @@
+import os
+from dotenv import load_dotenv
+
 import torch
-from transformers import BitsAndBytesConfig, AutoTokenizer, AutoModelForCausalLM, AutoConfig
+from transformers import AutoTokenizer, AutoModelForCausalLM, AutoConfig
 from functools import lru_cache
 from common.chroma_db import ChromaDBSearcher
 
+
 class ModelQA:
-    def __init__(self, model_id='meta-llama/Llama-2-7b-chat-hf', use_quantization=True, searcher=None):
+    def __init__(self, model_id='meta-llama/Llama-2-7b-chat-hf', use_quantization=False, searcher=None):
         """
         Initializes the ModelQA class with model loading, setup configurations, and a searcher for retrieving context.
         
@@ -16,6 +20,10 @@ class ModelQA:
         self.use_quantization = use_quantization
         self.searcher = searcher  # Store the searcher object
         self.tokenizer, self.llm_model = self.load_model()
+        # Load environment variables from the .env file
+        load_dotenv()
+        # Example API credentials (replace with actual values)
+        self.hfauthtoken = os.getenv("hfauthtoken") 
 
     @lru_cache(maxsize=5)
     def load_model(self):
@@ -23,23 +31,23 @@ class ModelQA:
         Loads the model and tokenizer based on the provided model_id.
         """
         
-        # Set up quantization if needed
+        # If quantization is not used, no need for BitsAndBytesConfig
         if self.use_quantization:
+            from transformers import BitsAndBytesConfig
             quantization_config = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_compute_dtype=torch.float16)
         else:
             quantization_config = None
         
         # Load the model configuration and tokenizer
-        auth_token = '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'
-        tokenizer = AutoTokenizer.from_pretrained(self.model_id, use_auth_token=auth_token)
-        config = AutoConfig.from_pretrained(self.model_id, use_auth_token=auth_token)
+        tokenizer = AutoTokenizer.from_pretrained(self.model_id, use_auth_token= self.hfauthtoken)
+        config = AutoConfig.from_pretrained(self.model_id, use_auth_token= self.hfauthtoken)
         config.hidden_activation = "gelu"
         
         # Force the model to use CPU
         device = torch.device('cpu')  # Ensure we're using CPU
         
         # Load the actual language model
-        llm_model = AutoModelForCausalLM.from_pretrained(self.model_id, use_auth_token=auth_token, config=config,
+        llm_model = AutoModelForCausalLM.from_pretrained(self.model_id, use_auth_token= self.hfauthtoken, config=config,
                                                          torch_dtype=torch.float16,
                                                          quantization_config=quantization_config,
                                                          low_cpu_mem_usage=True)
@@ -104,8 +112,8 @@ class ModelQA:
 
         # Clean up the output text if required
         if format_answer_text:
-            output_text = output_text.replace(prompt, "").replace("<bos>", "").replace("<eos>", "").replace("Sure, here is the answer to the user query:\n\n", "")
-        
+            output_text = output_text.replace(prompt, "").replace("<bos>", "")
+
         if return_answer_only:
             return output_text
         return output_text, context_items

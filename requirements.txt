@@ -1,26 +1,28 @@
 pysqlite3-binary
 accelerate==1.1.1
-# bert_score==0.3.12
+bert_score==0.3.12
 torch
 bitsandbytes==0.44.1
 chromadb==0.5.20
-# flash-attn
+flash-attn
 # fitz==1.23.26
-#fitz==0.0.1.dev2
+fitz
 nltk==3.9.1
 numpy==2.0.2
 pandas==2.2.3
 requests==2.31.0
-# rank_bm25
-# rouge_score
+rank_bm25
+rouge_score
 seaborn==0.12.2
 sentence-transformers==3.3.1
 sentencepiece==0.2.0
 spacy==3.8.2
 tqdm==4.66.2
 transformers==4.46.3
-# wheel==0.41.2
 streamlit==1.18.0  # Or the version you need
 altair==4.2.0  # Or any version that works with your setup
+openai==0.28
+python-dotenv
+
 
 

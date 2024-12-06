@@ -29,4 +29,4 @@ EXPOSE 8501
 COPY . /app
 
 # Set the command to run the Streamlit app when the container starts
-ENTRYPOINT ["streamlit", "run", "chatbot.py"]
+ENTRYPOINT ["streamlit", "run", "chatbot_llm_api.py"]

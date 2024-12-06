@@ -9,8 +9,6 @@ from common.chat_model import ModelQA
 from common.cache import ModelCache
 
 
-
-
 # Initialize the model cache
 model_cache = ModelCache()
 
@@ -41,8 +39,8 @@ llm_model = st.session_state.llm_model
 
 # Define your available document sources (you can customize this list)
 document_sources = [
-    "Fraggles__X500_2027_FMS",
-    "Fraggles__X700_2026_CRV"
+    "Fraggles_X500_2024_FMS",
+    "Fraggles_X700_2022_HCM"    
     # Add more sources as needed
 ]
 
