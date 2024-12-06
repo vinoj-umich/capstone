@@ -4,6 +4,14 @@ FROM python:3.11.7
 # Set the working directory inside the container
 WORKDIR /app
 
+# Install required dependencies, including sqlite3
+RUN apt-get update && apt-get install -y \
+    sqlite3 \
+    libsqlite3-dev \
+    && apt-get clean
+
+RUN sqlite3 --version  # To verify the correct version
+
 # Copy the requirements.txt file into the container
 COPY requirements.txt ./requirements.txt
 
@@ -21,4 +29,4 @@ EXPOSE 8501
 COPY . /app
 
 # Set the command to run the Streamlit app when the container starts
-ENTRYPOINT ["streamlit", "run", "chatbot.py"]
+ENTRYPOINT ["streamlit", "run", "chatbot_llm_api.py"]
