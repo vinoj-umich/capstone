@@ -29,7 +29,7 @@ if model_qa is None:
     # Initialize the ChromaDB searcher
     searcher = ChromaDBSearcher()
     # Create a new ModelQA instance and cache it
-    model_qa = ModelQAApi(api_key=api_key, endpoint=endpoint, deployment_name=deployment_name, searcher=searcher, use_gpu=False)
+    model_qa = ModelQAApi(api_key=gpt4apikey, endpoint=endpoint, deployment_name=deployment_name, searcher=searcher, use_gpu=False)
     model_cache.set(deployment_name, model_qa)
 
 # Define your available document sources (you can customize this list)
