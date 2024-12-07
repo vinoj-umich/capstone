@@ -77,7 +77,7 @@ The system uses several custom classes for building the data processing pipeline
    - The `document_processor.ipynb` notebook also contains functionality for creating synthetic ground truth answers, which can be used for training purposes.
 
 5. **Chatbot Integration**: 
-   - The main chatbot logic is contained in `chatbot.py`. It uses Streamlit to create a user-friendly web interface and integrates with the models and retrievers to provide real-time query answering.
+   - The main chatbot logic is contained in `chatbot_standalone_llm.py/chatbot_llm_api.py`. It uses Streamlit to create a user-friendly web interface and integrates with the models and retrievers to provide real-time query answering.
 
 ### Features
 
@@ -103,15 +103,40 @@ The documents you use should be pre-processed into embeddings, chunked and index
 ### Running the Chatbot
 
 To run the chatbot locally, follow these steps:
+1. **Set up API Keys and Tokens:**
 
-1. Start the Streamlit application:
-   ```bash
-   streamlit run chatbot.py
+   - Create a `.env` file in the project root folder if it doesn't already exist.
+   - Add the following entries to the `.env` file:
+
+     - `gpt4apikey="<your_gpt4_api_key>"`  
+       *Optional:* Use this if you plan to utilize the GPT-4 LLM. If you don't use GPT-4, you can skip this.
+
+     - `gpt4endpoint="<your_gpt4_endpoint_url>"`  
+       *Optional:* Provide the endpoint URL if you're using GPT-4 as your LLM.
+
+     - `hfauthtoken="<your_hugging_face_access_token>"`  
+       Add your Hugging Face access token here. This is required for using Hugging Face models.
+
+2. **Start the Streamlit Application:**
+
+   Once your `.env` file is set up, you can launch the chatbot using Streamlit. Choose one of the following commands depending on the configuration:
+
+   - To run the chatbot with the Hugging Face model:
+     ```bash
+     streamlit run chatbot_standalone_llm.py
+     ```
+     *Note:* This requires the Hugging Face access token to be set in your `.env` file.
+
+   - To run the chatbot with external API keys (such as GPT-4 or other LLMs):
+     ```bash
+     streamlit run chatbot_llm_api.py
+     ```
+     *Note:* This requires the API keys (such as GPT-4 API key) and the Hugging Face access token in the `.env` file.
    ```
 
-2. A browser window will open, displaying the chatbot interface. You can now start asking questions and interact with the chatbot.
+3. A browser window will open, displaying the chatbot interface. You can now start asking questions and interact with the chatbot.
 
-3. The chatbot will process your queries using the pre-trained models and retrieve relevant information from the ingested documents, providing real-time responses.
+4. The chatbot will process your queries using the pre-trained models and retrieve relevant information from the ingested documents, providing real-time responses.
 
 ### Contributors
 
@@ -121,7 +146,6 @@ To run the chatbot locally, follow these steps:
 
 ### Future Enhancements
 
-- **Support for Multi-Document Queries**: Expand the chatbot's ability to handle queries that involve multiple documents simultaneously, offering more relevant answers.
 - **Model Versioning**: Implement version control for models to make updates and upgrades easier to manage.
 - **Faster Retrieval**: Further optimize the retrieval process using more advanced methods such as **FAISS** or **ElasticSearch**.
 - **Enhanced User Interface**: Improve the UI for a more seamless and interactive user experience, including features like document previews or better query formatting.
