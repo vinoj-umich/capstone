@@ -20,7 +20,7 @@ load_dotenv()
 
 # Example API credentials (replace with actual values)
 gpt4apikey = os.getenv("gpt4apikey") 
-endpoint = "https://fragglesopenai.openai.azure.com/"
+endpoint = os.getenv("endpoint") 
 deployment_name = "gpt-4"  # Use your model deployment name
 
 # Check if model is already cached

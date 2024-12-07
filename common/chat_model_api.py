@@ -74,9 +74,9 @@ class ModelQAApi:
         # Format the prompt with context items
         prompt = self.prompt_formatter(query, context_items)
         
-        print("******************")
-        print(prompt)
-        print("******************")
+        # print("******************")
+        # print(prompt)
+        # print("******************")
         
         # Prepare the message format expected by OpenAI's ChatCompletion API
         messages = [

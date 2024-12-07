@@ -20,17 +20,16 @@ class ModelQA:
         self.use_quantization = use_quantization
         self.searcher = searcher  # Store the searcher object
         self.tokenizer, self.llm_model = self.load_model()
-        # Load environment variables from the .env file
-        load_dotenv()
-        # Example API credentials (replace with actual values)
-        self.hfauthtoken = os.getenv("hfauthtoken") 
+        
 
     @lru_cache(maxsize=5)
     def load_model(self):
         """
         Loads the model and tokenizer based on the provided model_id.
         """
-        
+        load_dotenv()
+        # Example API credentials (replace with actual values)
+        self.hfauthtoken = os.getenv("hfauthtoken")
         # If quantization is not used, no need for BitsAndBytesConfig
         if self.use_quantization:
             from transformers import BitsAndBytesConfig
@@ -44,7 +43,7 @@ class ModelQA:
         config.hidden_activation = "gelu"
         
         # Force the model to use CPU
-        device = torch.device('cpu')  # Ensure we're using CPU
+        device = torch.device('cuda')  # Ensure we're using CPU
         
         # Load the actual language model
         llm_model = AutoModelForCausalLM.from_pretrained(self.model_id, use_auth_token= self.hfauthtoken, config=config,
@@ -99,7 +98,7 @@ class ModelQA:
         if self.tokenizer.pad_token is None:
             # If no padding token is defined, set it to the eos_token
             self.tokenizer.pad_token = self.tokenizer.eos_token
-        input_ids = self.tokenizer(prompt, return_tensors="pt", truncation=True, padding=True, max_length=512 , return_attention_mask=True).to("cpu")  # Use CPU
+        input_ids = self.tokenizer(prompt, return_tensors="pt", truncation=True, padding=True, max_length=512 , return_attention_mask=True).to("cuda")  # Use CPU
 
         # Generate an output of tokens
         outputs = self.llm_model.generate(**input_ids,
