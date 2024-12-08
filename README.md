@@ -17,10 +17,44 @@ Before running the AutoSensAI Chatbot, ensure the following prerequisites are me
    git clone https://github.com/vinoj-umich/capstone.git
    ```
 
-2. **Install the required Python packages**:
+Here’s the reformatted version of your instructions:
+
+---
+
+### 2. **Install the Required Python Packages**:
+
+#### Activate the Virtual Environment:
+- On **Linux/Mac**:
+   ```bash
+   source <myenv>/bin/activate
+   ```
+
+   or 
+
+   ```bash
+   . <myenv>/bin/activate
+   ```
+
+#### Install Dependencies from `requirements.txt`:
    ```bash
    pip install -r requirements.txt
    ```
+
+#### Add Jupyter Kernel for the Virtual Environment:
+1. Install `ipykernel`:
+   ```bash
+   pip install ipykernel
+   ```
+
+2. Add the virtual environment as a new Jupyter kernel:
+   ```bash
+   python -m ipykernel install --user --name=<myenv> --display-name "Python (<myenv>)"
+   ```
+
+Replace `<myenv>` with the name of your virtual environment.
+
+
+This version provides a clearer structure and flow for the steps.
 
 3. **Ensure Python 3.11 is installed**. The system has been tested on Windows 11 with an NVIDIA RTX 4090 (CUDA 12.1). It is recommended to use Python 3.11 or above for optimal performance.
 
