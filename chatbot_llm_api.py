@@ -33,14 +33,23 @@ if model_qa is None:
     model_cache.set(deployment_name, model_qa)
 
 # Define your available document sources (you can customize this list)
-document_sources = [
-    "Fraggles_X500_2024_FMS",
-    "Fraggles_X700_2022_HCM"
-    # Add more sources as needed
-]
+# Define your available document sources with labels (you can customize this list)
+document_sources = {
+    "Fraggles_X500_2024_FMS": "Fraggles X500 (2024) - FMS",  # Custom label for the document
+    "Fraggles_X700_2022_HCM": "Fraggles X700 (2022) - HCM"   # Custom label for the document
+    # Add more sources with labels as needed
+}
 
-# Create a dropdown menu (combo box) for document selection
-document_source = st.selectbox("Select Car Model, Make & Year", document_sources)
+# Create a dropdown menu (combo box) for document selection with labeled options
+document_source_label = st.selectbox(
+    "Select Car Make, Model & Year",  
+    list(document_sources.values()),
+    index=0,                          # Optional: Set the default selected item (first label)
+    help="Please select the car make, model, and year to view related documents."  # Tooltip for additional context
+)
+
+# Get the actual internal document name based on the label selected
+selected_document_key = [key for key, value in document_sources.items() if value == document_source_label][0]
 
 # Initialize chat history in session state if not already initialized
 if 'chat_history' not in st.session_state:
@@ -48,30 +57,36 @@ if 'chat_history' not in st.session_state:
 
 # Define CSS for chat bubbles layout
 st.markdown("""
- <style>
+<style>
     .chat-container {
         display: flex;
         flex-direction: column;
         gap: 15px;
     }
+
     .user-message {
         align-self: flex-end;
-        background-color: #DCF8C6;
         padding: 10px;
         border-radius: 15px;
         max-width: 70%;
         word-wrap: break-word;
         text-decoration: none;  /* Ensure no strike-through */
+        border: 2px solid #4CAF50;  /* Green border for user message */
+        margin-bottom: 10px;  /* Add gap below user message */
     }
+
     .bot-message {
         align-self: flex-start;
-        background-color: #F1F0F0;
         padding: 10px;
         border-radius: 15px;
         max-width: 70%;
         word-wrap: break-word;
         text-decoration: none;  /* Ensure no strike-through */
+        border: 2px solid #2196F3;  /* Blue border for bot message */
+        margin-top: 10px;  /* Add gap above bot message */
+        margin-bottom: 10px;  /* Add gap below bot message */
     }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -98,7 +113,7 @@ query = st.text_area("Enter your query here:", key="query_input", value=st.sessi
 if st.button("Ask"):
     if query:
         with st.spinner("Generating response..."):
-            answer = model_qa.ask(document_source, query)  # No need to pass tokenizer and llm_model if they are in ModelQA
+            answer = model_qa.ask(selected_document_key, query)  # No need to pass tokenizer and llm_model if they are in ModelQA
         
         # Only append the user query and bot response to history (not the context)
         st.session_state.chat_history.append({"user": query, "bot": ""})  # Initially add empty bot message for chat bubble layout

@@ -56,7 +56,7 @@ class ModelQAApi:
                     """
         return base_prompt.format(context=context, query=query)
 
-    def ask(self, document_source, query, temperature=0.5, max_new_tokens=512, format_answer_text=True, return_answer_only=True):
+    def ask(self, document_source, query, temperature=0.4, max_tokens=256,  top_p=0.7, frequency_penalty=1.0, presence_penalty=1.0, format_answer_text=True, return_answer_only=True):
         """
         Handles querying the model, retrieving context, and generating the answer.
         
@@ -64,6 +64,9 @@ class ModelQAApi:
         :param query: The query to be answered by the model.
         :param temperature: Sampling temperature for answer generation.
         :param max_new_tokens: Maximum number of tokens for answer generation.
+        :param top_p=0.7 (restrict the token pool to the most likely options)
+        :param frequency_penalty=1.0 (discourage repetition)
+        :param presence_penalty=1.0 (avoid introducing irrelevant new topics)
         :param format_answer_text: Whether to clean up the output answer.
         :param return_answer_only: Whether to return only the generated answer (without context).
         :return: Generated answer (and optionally context).
@@ -80,7 +83,7 @@ class ModelQAApi:
         
         # Prepare the message format expected by OpenAI's ChatCompletion API
         messages = [
-            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "system", "content": "You are an expert in quantum mechanics and always provide scientifically accurate answers."},
             {"role": "user", "content": query},
             {"role": "assistant", "content": prompt}
         ]
@@ -95,7 +98,10 @@ class ModelQAApi:
                 engine=self.deployment_name,
                 messages=messages,  # Correct way: passing the messages list instead of prompt
                 temperature=temperature,
-                max_tokens=max_new_tokens
+                max_tokens=max_tokens,
+                top_p=top_p,
+                frequency_penalty=frequency_penalty,
+                presence_penalty=presence_penalty
             )
 
             # Extract and clean up the output text
