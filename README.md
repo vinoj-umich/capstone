@@ -128,7 +128,9 @@ The system uses several custom classes for building the data processing pipeline
   
 - **Running Locally or in the Cloud**: The chatbot can be run either on your local machine (with an appropriate GPU) or on cloud-based platforms like **Google Colab**, which offers easy setup without requiring local GPU resources.
 
-### Data Access
+### Data Access Statement
+
+The data used and generated for this project, including the test data from hypothetical core manuals, vector embeddings, and model experimentation results, are integral to the development of our Chatbot application and will be stored in a secure vector database. As part of our ongoing efforts to refine the system, we will provide access to select datasets upon request, subject to ethical considerations and project requirements.
 
 The chatbot uses **pre-processed PDFs** stored in the `/chroma_db_dir` directory. You interact with the chatbot by entering questions, and the chatbot retrieves relevant information from these documents to provide a response. 
 
